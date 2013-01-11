@@ -19,6 +19,7 @@
     - coffee-rails
     - jquery-rails
     - sass-rails
+    - sinatra
 
 :msvc_runtime:
   :name: MsvcRuntime
