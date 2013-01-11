@@ -3,7 +3,7 @@ module RailsInstaller
   def self.build!
 
     components = [
-      BSDTar, SevenZip, DevKit, Git, Ruby193,
+      BSDTar, SevenZip, Git, Ruby193,
       PostgresServer, Sqlite3, Sqlite3Dll
     ]
 
@@ -14,8 +14,6 @@ module RailsInstaller
     end
 
     stage_sqlite
-
-    link_devkit_with_ruby
 
     stage_git
 

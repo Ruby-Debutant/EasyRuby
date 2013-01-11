@@ -5,9 +5,6 @@ Except:
   * Ruby is copyrighted free software by Yukihiro Matsumoto.
     http://www.ruby-lang.org/en/LICENSE.txt
 
-  * DevKit is licensed via the RubyInstaller project:
-    http://rubyinstaller.org/
-
   * Git is licensed under GNU GPL v2.0
     http://www.gnu.org/licenses/gpl-2.0.txt
 

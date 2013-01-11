@@ -27,14 +27,6 @@
   :regex: '^.*$'
   :url: "http://download.microsoft.com/download/d/d/9/dd9a82d0-52ef-40db-8dab-795376989c03/vcredist_x86.exe"
 
-:dev_kit:
-  :name: DevKit
-  :title: Development Kit
-  :category: component
-  :regex: '^.*$'
-  :target: 'DevKit'
-  :url: "https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe"
-
 :ruby192:
   :category: component
   :title: Ruby 1.9.2

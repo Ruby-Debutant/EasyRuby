@@ -213,21 +213,6 @@ module RailsInstaller
     end
   end
 
-  #
-  # Add functionality to DevKit object that was loaded during configure.
-  #
-  def self.link_devkit_with_ruby
-    devkit_path = File.join(Stage, DevKit.target)
-    ruby_path = File.join(Stage, Ruby193.rename)
-    FileUtils.mkdir_p(devkit_path) unless File.directory?(devkit_path)
-    Dir.chdir(devkit_path) do
-      File.open("config.yml", "w") do |file|
-        file.write(%Q(---\n- #{ruby_path}))
-      end
-      sh %Q{#{File.join(ruby_path, "bin", "ruby")} dk.rb install}
-    end
-  end
-
   def self.stage_git
     # TODO: adjust git config for CRLF => LF autoadjust.
     gitconfig = File.join(Stage, Git.target, "etc", "gitconfig")

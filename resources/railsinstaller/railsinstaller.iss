@@ -88,24 +88,22 @@ Name: en; MessagesFile: compiler:Default.isl
 [Messages]
 en.InstallingLabel=Installing [name], this will take a few minutes...
 en.WelcomeLabel1=Welcome to [name]!
-en.WelcomeLabel2=This will install [name/ver] on your computer which includes Ruby 1.9.2, Rails 3.1, Git, Sqlite3, DevKit, and TinyTDS with FreeTDS.  Please close any console applications before continuing.
+en.WelcomeLabel2=This will install [name/ver] on your computer which includes Ruby 1.9.2, Rails 3.1, Git, Sqlite3, and TinyTDS with FreeTDS.  Please close any console applications before continuing.
 en.WizardLicense={#InstallerName} License Agreement
 en.LicenseLabel=
 en.LicenseLabel3=Please read the following License Agreements and accept the terms before continuing the installation.
 en.LicenseAccepted=I &accept all of the Licenses
 en.LicenseNotAccepted=I &decline any of the Licenses
 en.WizardSelectDir=Installation Destination and Optional Tasks
-en.SelectDirDesc=This is the location that Ruby, DevKit, Git, Rails and Sqlite will be installed to.
+en.SelectDirDesc=This is the location that Ruby, Git, Rails and Sqlite will be installed to.
 en.SelectDirLabel3=[name] will be installed into the following folder. Click Install to continue or click Browse to use a different one.
 en.SelectDirBrowseLabel=Please avoid any folder name that contains spaces (e.g. Program Files).
 en.DiskSpaceMBLabel=Required free disk space: ~[mb] MB
 
 [Files]
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: {#StagePath}\{#RubyPath}\*; DestDir: {app}\{#RubyPath}; Excludes: "devkit.*, operating_system.*"; Flags: recursesubdirs createallsubdirs
+Source: {#StagePath}\{#RubyPath}\*; DestDir: {app}\{#RubyPath}; Excludes: "operating_system.*"; Flags: recursesubdirs createallsubdirs
 Source: {#StagePath}\Git\*; DestDir: {app}\Git; Flags: recursesubdirs createallsubdirs
-Source: {#StagePath}\DevKit\*; DestDir: {app}\DevKit; Excludes: "config.yml"; Flags: recursesubdirs createallsubdirs
-Source: {#StagePath}\DevKit\config.yml; DestDir: {app}\DevKit; AfterInstall: UpdateDevKitConfig('{app}\{#RubyPath}', '{app}\DevKit\config.yml')
 Source: {#StagePath}\Sites\*; DestDir: {sd}\Sites; Flags: recursesubdirs createallsubdirs
 Source: {#StagePath}\scripts\*; DestDir: {app}\scripts; Flags: recursesubdirs createallsubdirs
 ; TODO: Instead of running the full vcredist, simply extract and bundle the dll
@@ -129,7 +127,6 @@ Name: {group}\Git Bash; Filename: {sys}\cmd.exe; Parameters: "/c """"{app}\Git\b
 Name: {group}\{cm:UninstallProgram,{#InstallerName}}; Filename: {uninstallexe}
 
 [Run]
-Filename: "{app}\{#RubyPath}\bin\ruby.exe"; Parameters: "dk.rb install --force"; WorkingDir: "{app}\DevKit"; Flags: runhidden
 Filename: {sys}\cmd.exe; Parameters: /E:ON /K {app}\{#RubyPath}\setup_environment.bat {app}; WorkingDir: {sd}\Sites; Description: "Configure git and ssh when installation has completed.";  Flags: postinstall nowait skipifsilent
 
 ; TODO: Instead of running the full vcredist, simply extract and bundle the dll
@@ -186,16 +183,4 @@ begin
         ModifyPath([ExpandConstant('{app}') + '\Git\cmd']);
     end;
   end;
-end;
-
-procedure UpdateDevKitConfig(RubyPath: string; FileName: string);
-var
-  S: String;
-begin
-  // Make YAML happy :-)
-  S := ExpandConstant(RubyPath);
-  StringChangeEx(S, '\', '/', True);
-
-  // Update DevKit config.yml with the installation path
-  SaveStringToFile(ExpandConstant(FileName), '- ' + S, False);
 end;
