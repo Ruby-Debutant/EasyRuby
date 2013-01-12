@@ -46,14 +46,6 @@ module EasyRuby
     easyruby_version = File.read(File.join(EasyRuby::Root, "VERSION.txt")).chomp
 
     printf "\nPackaging... this *will* take a while...\n"
-    
-    puts  "\"#{File.join(EasyRuby::Root, "resources", "easyruby", "easyruby.iss")}\"",
-          "/dInstallerVersion=#{easyruby_version}",
-          "/dStagePath=\"#{EasyRuby::Stage}\"",
-          "/dRubyPath=\"#{EasyRuby::Ruby193.rename}\"",
-          "/dResourcesPath=\"#{File.join(EasyRuby::Root, "resources")}\"",
-          "/o\"#{EasyRuby::PackageDir}\"",
-          "/feasyruby-#{easyruby_version}"
 
     iscc "\"#{File.join(EasyRuby::Root, "resources", "easyruby", "easyruby.iss")}\"",
           "/dInstallerVersion=#{easyruby_version}",
