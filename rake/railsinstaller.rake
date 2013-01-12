@@ -1,18 +1,18 @@
 task :default do
-  printf "\nRailsInstaller Rake Tasks:
+  printf "\nEasyRuby Rake Tasks:
 
   {bootstrap, build, package}
 
 See README for more details.\n\n"
 end
 
-task :require_railsinstaller do
+task :require_easyruby do
 
-  require "railsinstaller"
+  require "easyruby"
 
 end
 
-desc "Bootstrap RailsInstaller development environment (gems)"
+desc "Bootstrap EasyRuby development environment (gems)"
 task :bootstrap do
 
   require "rubygems/dependency_installer"
@@ -38,15 +38,15 @@ task :bootstrap do
 end
 
 desc "Download and build all components and dependencies into stage/."
-task :build => [ :require_railsinstaller ] do
+task :build => [ :require_easyruby ] do
 
-  RailsInstaller.build!
+  EasyRuby.build!
 
 end
 
 desc "Package all components into a single executable installer into pkg/."
-task :package => [ :require_railsinstaller ] do
+task :package => [ :require_easyruby ] do
 
-  RailsInstaller.package!
+  EasyRuby.package!
 
 end

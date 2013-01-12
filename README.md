@@ -82,17 +82,11 @@ built and packaged via rake tasks.
 
 The next few sections detail the core components that make up RailsInstaller.
 
-### Ruby 1.8.7/1.9.2 on Windows
+### Ruby 1.9.2 on Windows
 
 RubyInstaller is a self contained package installer which installs Ruby and
 RubyGems on a windows system, head over to http://rubyinstaller.org/ for more
 information.
-
-### Development Kit (DevKit)
-
-A MSYS/MinGW based toolkit that enables RailsInstaller to build native C/C++
-packages, both for Ruby and gems. DevKit is built and maintained by the
-wonderful folks over at the RubyInstaller (http://rubyinstaller.org/) project.
 
 ### Git
 

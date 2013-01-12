@@ -1,11 +1,11 @@
-module RailsInstaller
+module EasyRuby
   #
-  # Load initial objects (OpenStruct) from railsinstaller.yml
+  # Load initial objects (OpenStruct) from easyruby.yml
   #
   @@config = YAML.load(
     ERB.new(
       File.read(
-        File.join(Root, "config", "railsinstaller.yml")
+        File.join(Root, "config", "easyruby.yml")
       )
     ).result(binding)
   )
