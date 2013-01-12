@@ -1,4 +1,4 @@
-module RailsInstaller
+module EasyRuby
 
   #
   # unzip:
@@ -18,8 +18,8 @@ module RailsInstaller
 
     printf " => Extracting #{filename}\n"
 
-    Dir.chdir(RailsInstaller::Archives) do
-      archive = File.join(RailsInstaller::Archives, filename)
+    Dir.chdir(EasyRuby::Archives) do
+      archive = File.join(EasyRuby::Archives, filename)
 
       Zip::ZipFile.open(archive) do |zipfile|
         printf "zipfile: #{zipfile.inspect}\n" if $Flags[:verbose]
@@ -32,7 +32,7 @@ module RailsInstaller
           entries = zipfile.entries
         end
 
-        FileUtils.mkdir_p(File.join(RailsInstaller::Stage, "bin"))
+        FileUtils.mkdir_p(File.join(EasyRuby::Stage, "bin"))
 
         entries.each do |entry|
           printf "DEBUG: Extracting #{entry.name}\n" if $Flags[:verbose]
@@ -42,10 +42,10 @@ module RailsInstaller
           end
           zipfile.extract(entry, entry.name)
 
-          if File.exist?(File.join(RailsInstaller::Archives, entry.name))
+          if File.exist?(File.join(EasyRuby::Archives, entry.name))
             FileUtils.mv(
-              File.join(RailsInstaller::Archives, entry.name),
-              File.join(RailsInstaller::Stage, "bin", entry.name),
+              File.join(EasyRuby::Archives, entry.name),
+              File.join(EasyRuby::Stage, "bin", entry.name),
               :force => true
             )
           end
@@ -61,7 +61,7 @@ module RailsInstaller
   # Used to extract a non-zip file using BSDTar
   #
   def self.extract(package)
-    Dir.chdir(RailsInstaller::Archives) do
+    Dir.chdir(EasyRuby::Archives) do
       filename = File.basename(package.url)
 
       unless File.exists?(filename)
@@ -69,42 +69,42 @@ module RailsInstaller
       end
 
       if package.target.nil?
-        target_path = RailsInstaller::Stage
+        target_path = EasyRuby::Stage
       else
-        target_path = File.join(RailsInstaller::Stage, package.target)
+        target_path = File.join(EasyRuby::Stage, package.target)
       end
-      bsdtar      = File.join(RailsInstaller::Stage, "bin", RailsInstaller::BSDTar.binary)
-      sevenzip    = File.join(RailsInstaller::Stage, "bin", RailsInstaller::SevenZip.binary)
+      bsdtar      = File.join(EasyRuby::Stage, "bin", EasyRuby::BSDTar.binary)
+      sevenzip    = File.join(EasyRuby::Stage, "bin", EasyRuby::SevenZip.binary)
 
       if package.category == "utility" &&
-        File.exist?(File.join(RailsInstaller::Stage, "bin", package.binary))
+        File.exist?(File.join(EasyRuby::Stage, "bin", package.binary))
         printf "#{package.name} already on stage.\n"
         return
       end
 
       printf " => Extracting "#{filename}" to the stage.\n" if $Flags[:verbose]
 
-      FileUtils.mkdir_p(RailsInstaller::Stage) unless File.directory?(RailsInstaller::Stage)
+      FileUtils.mkdir_p(EasyRuby::Stage) unless File.directory?(EasyRuby::Stage)
 
       case package.category
         when "utility" # Remove target file, if exists.
-          target = File.join(RailsInstaller::Stage, "bin", package.binary)
+          target = File.join(EasyRuby::Stage, "bin", package.binary)
           if File.exists?(target)
             printf "#{target} on stage.\n"
             return
           end
           FileUtils.rm_f(target) if File.exist?(target)
         when "component" # Remove target dir if it exists and is different than the stage
-          if (File.directory?(target_path) && target_path != RailsInstaller::Stage)
+          if (File.directory?(target_path) && target_path != EasyRuby::Stage)
             FileUtils.rm_rf(target_path)
           end
         else
         raise "Unknown package category"#{package.category}".\npackage category should be one of {"utility","component"}?"
       end
 
-      archive = File.join(RailsInstaller::Archives, filename)
+      archive = File.join(EasyRuby::Archives, filename)
 
-      Dir.chdir(RailsInstaller::Stage) do
+      Dir.chdir(EasyRuby::Stage) do
           case filename
             when /(^.+\.tar)\.z$/, /(^.+\.tar)\.gz$/, /(^.+\.tar)\.bz2$/, /(^.+\.tar)\.lzma$/, /(^.+)\.tgz$/
               line = %Q("#{bsdtar}" -xf "#{archive}")
@@ -127,7 +127,7 @@ module RailsInstaller
         if package.rename
           case package.category
             when "component"
-              Dir.chdir(RailsInstaller::Stage) do
+              Dir.chdir(EasyRuby::Stage) do
                 if File.exist?(package.rename)
                   FileUtils.rm_rf(package.rename)
                 end
@@ -153,14 +153,14 @@ module RailsInstaller
   def self.install_utility
 
     # TODO: Merge this into download, simply check if object has a .binary attribute.
-    if File.exists?(File.join(RailsInstaller::Stage, "bin", binary))
-      printf "#{File.join(RailsInstaller::Stage, "bin", binary)} exists.\nSkipping download, extract and install.\n"
+    if File.exists?(File.join(EasyRuby::Stage, "bin", binary))
+      printf "#{File.join(EasyRuby::Stage, "bin", binary)} exists.\nSkipping download, extract and install.\n"
     else
       printf " => Downloading and extracting #{binary} from #{utility.url}\n"
 
-      FileUtils.mkdir_p(RailsInstaller::Stage) unless File.directory?(RailsInstaller::Stage)
+      FileUtils.mkdir_p(EasyRuby::Stage) unless File.directory?(EasyRuby::Stage)
 
-      Dir.chdir(RailsInstaller::Stage) do
+      Dir.chdir(EasyRuby::Stage) do
         filename = File.basename(utility.url)
         FileUtils.rm_f(filename) if File.exist?(filename)
         # Utilities are small executables, thus using open-uri to download them is fine.
@@ -172,13 +172,13 @@ module RailsInstaller
 
         extract(binary)
 
-        printf " => Installing #{binary} to #{File.join(RailsInstaller::Stage, "bin")}\n"
+        printf " => Installing #{binary} to #{File.join(EasyRuby::Stage, "bin")}\n"
 
-        FileUtils.mkdir_p(RailsInstaller::Stage, "bin") unless File.directory?(RailsInstaller::Stage, "bin")
+        FileUtils.mkdir_p(EasyRuby::Stage, "bin") unless File.directory?(EasyRuby::Stage, "bin")
 
         FileUtils.mv(
-          File.join(RailsInstaller::Stage, binary),
-          File.join(RailsInstaller::Stage, "bin", binary),
+          File.join(EasyRuby::Stage, binary),
+          File.join(EasyRuby::Stage, "bin", binary),
           :force => true
         )
       end
@@ -243,7 +243,7 @@ module RailsInstaller
 
     line = %Q(#{git_binary} clone https://github.com/engineyard/todo todo)
 
-    applications_path = File.join(RailsInstaller::Stage, "Sites")
+    applications_path = File.join(EasyRuby::Stage, "Sites")
     FileUtils.mkdir_p applications_path unless File.exist?(applications_path)
     Dir.chdir(applications_path) { sh line }
     # now bootstrap gems...
@@ -270,19 +270,19 @@ module RailsInstaller
   # They have installation-sensitive information (installation path)
   def self.stage_setup_scripts
     section Scripts
-    scripts_path = File.join(RailsInstaller::Stage, "scripts")
+    scripts_path = File.join(EasyRuby::Stage, "scripts")
     FileUtils.mkdir_p(scripts_path) unless File.exist?(scripts_path)
 
     %w( config_check.rb ).each do |file|
       FileUtils.cp(
-        File.join(RailsInstaller::Scripts, file),
+        File.join(EasyRuby::Scripts, file),
         File.join(scripts_path, file)
       )
     end
 
     %w( publickey.bat ).each do |file|
       FileUtils.cp(
-        File.join(RailsInstaller::Scripts, file),
+        File.join(EasyRuby::Scripts, file),
         File.join(Stage, Ruby193.rename, "bin", file)
       )
     end
@@ -291,12 +291,12 @@ module RailsInstaller
   # MSVC Runtime 2008 is Required for Postgresql Server
   def self.stage_msvc_runtime
     download(MsvcRuntime)
-    pkg_path = File.join(RailsInstaller::Stage, "pkg")
+    pkg_path = File.join(EasyRuby::Stage, "pkg")
 
     FileUtils.mkdir_p(pkg_path) unless File.exist?(pkg_path)
 
     FileUtils.cp(
-      File.join(RailsInstaller::Archives, File.basename(MsvcRuntime.url)),
+      File.join(EasyRuby::Archives, File.basename(MsvcRuntime.url)),
       File.join(pkg_path, File.basename(MsvcRuntime.url))
     )
   end
@@ -343,7 +343,7 @@ module RailsInstaller
     %w(GEM_HOME GEM_PATH).each { |variable| ENV.delete(variable)}
     line = %Q(#{File.join(ruby_path, "bin", "ruby")} -S #{name} #{line} #{action})
     line += options[:args] if options[:args]
-    applications_path = File.join(RailsInstaller::Stage, "Sites")
+    applications_path = File.join(EasyRuby::Stage, "Sites")
     FileUtils.mkdir_p applications_path unless File.exist?(applications_path)
     Dir.chdir(applications_path) { sh line }
   end
@@ -378,7 +378,7 @@ module RailsInstaller
   # Runs Shell lines, single point of shell contact.
   #
   def self.sh(line, options = {})
-    stage_bin_path = File.join(RailsInstaller::Stage, "bin")
+    stage_bin_path = File.join(EasyRuby::Stage, "bin")
     ENV["PATH"] = "#{stage_bin_path};#{ENV["PATH"]}" unless ENV["PATH"].include?(stage_bin_path)
 
     printf "\nDEBUG: > %s\n\n", line if $Flags[:verbose]

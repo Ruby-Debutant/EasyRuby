@@ -1,4 +1,4 @@
-; RailsInstaller - InnoSetup Script
+; EasyRuby - InnoSetup Script
 ; Adaptation from RubyInstaller installer script
 ;
 
@@ -13,12 +13,12 @@
 ;                         [/dInstVersion=26-OCT-2009]
 
 ; Full example:
-; iscc resouces\railsinstaller\railsinstaller.iss \
+; iscc resouces\easyruby\easyruby.iss \
 ;       /dInstallerVersion=2.1.0 \
 ;       /dStagePath=stage \
 ;       /dRubyPath=Ruby1.9.2 \
 ;       /opkg
-;       /frailsinstaller-2.1.0.exe
+;       /feasyruby-2.1.0.exe
 
 #if Defined(InstallerVersion) == 0
   #error Please provide a InstallerVersion definition using a /d parameter.
@@ -41,10 +41,10 @@
 #endif
 
 ; Build Installer details using above values
-#define InstallerName "RailsInstaller"
+#define InstallerName "EasyRuby"
 #define InstallerNameWithVersion InstallerName + " " + InstallerVersion
-#define InstallerPublisher "RailsInstaller Team"
-#define InstallerHomepage "http://www.railsinstaller.org/"
+#define InstallerPublisher "EasyRuby Team"
+#define InstallerHomepage "http://www.easyruby.org/"
 
 #define CurrentYear GetDateTimeString('yyyy', '', '')
 
@@ -58,7 +58,7 @@ AppPublisher={#InstallerPublisher}
 AppPublisherURL={#InstallerHomepage}
 AppVersion={#InstallerVersion}
 DefaultGroupName={#InstallerName}
-DefaultDirName={sd}\RailsInstaller
+DefaultDirName={sd}\EasyRuby
 DisableProgramGroupPage=true
 LicenseFile=LICENSE.txt
 Compression=lzma2/ultra64
@@ -72,8 +72,8 @@ VersionInfoDescription=Rails development environment installer for Windows
 VersionInfoTextVersion={#InstallerVersion}
 VersionInfoVersion={#InstallerVersion}
 UninstallDisplayIcon={app}\bin\ruby.exe
-WizardImageFile={#ResourcesPath}\images\RailsInstallerWizardImage.bmp
-WizardSmallImageFile={#ResourcesPath}\images\RailsInstallerWizardImageSmall.bmp
+WizardImageFile={#ResourcesPath}\images\EasyRubyWizardImage.bmp
+WizardSmallImageFile={#ResourcesPath}\images\EasyRubyWizardImageSmall.bmp
 PrivilegesRequired=lowest
 ChangesAssociations=yes
 ChangesEnvironment=yes
@@ -140,7 +140,7 @@ Filename: {sys}\cmd.exe; Parameters: /E:ON /K {app}\{#RubyPath}\setup_environmen
 
 [Code]
 #include "util.iss"
-#include "railsinstaller_gui.iss"
+#include "easyruby_gui.iss"
 
 function GetInstallDate(Param: String): String;
 begin
@@ -174,7 +174,7 @@ begin
   if IsModifyPath then
     SetPreviousData(PreviousDataKey, 'PathModified', 'yes');
 
-  SetPreviousData(PreviousDataKey, 'RailsInstallerId', '{#InstallerVersion}');
+  SetPreviousData(PreviousDataKey, 'EasyRubyId', '{#InstallerVersion}');
 end;
 
 procedure CurUninstallStepChanged(const CurUninstallStep: TUninstallStep);

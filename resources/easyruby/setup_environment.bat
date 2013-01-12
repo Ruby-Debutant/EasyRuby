@@ -1,7 +1,7 @@
 @ECHO OFF
 
 REM
-REM Environment setup file for RailsInstaller.
+REM Environment setup file for EasyRuby.
 REM
 
 REM
@@ -12,7 +12,7 @@ SET RUBY_DIR=%CD%
 POPD
 
 REM
-REM Now Determine the RailsInstaller Root directory (parent directory of Ruby)
+REM Now Determine the EasyRuby Root directory (parent directory of Ruby)
 REM
 PUSHD %RUBY_DIR%\..
 SET ROOT_DIR=%CD%
@@ -36,10 +36,10 @@ REM Set the HOME environment variables for Ruby & Gems to use with ENV["HOME"]
 REM
 SET HOME=%HOMEDRIVE%%HOMEPATH%
 
-SET RailsInstallerPath=%1
+SET EasyRubyPath=%1
 REM Check configurations for Git and SSH
-IF EXIST %RailsInstallerPath% (
-  ruby %RailsInstallerPath%\scripts\config_check.rb
+IF EXIST %EasyRubyPath% (
+  ruby %EasyRubyPath%\scripts\config_check.rb
 ) ELSE (
   ruby.exe "require 'rbconfig' ; file=%%\#{RbConfig::}"
 )

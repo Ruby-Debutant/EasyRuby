@@ -8,7 +8,7 @@ Config =
     :git_config_incomplete => "\nYour git configuration is incomplete.\nuser.name and user.email are required for properly using git and services such \nas GitHub ( http://github.com/ ).\n",
     :git_name_prompt => "\n Please enter your name, for example mine is: Wayne E. Seguin\nname > ",
     :git_email_prompt => "\n Please enter your email address, for example mine is: wayneeseguin@gmail.com\nemail > ",
-    :railsinstaller_path => File.dirname(File.dirname($0)),
+    :easyruby_path => File.dirname(File.dirname($0)),
     :home        => File.join( ENV["HOMEDRIVE"], ENV["HOMEPATH"] ),
     :ssh_path    => File.join( ENV["HOMEDRIVE"], ENV["HOMEPATH"], ".ssh" ),
     :ssh_key     => File.join( ENV["HOMEDRIVE"], ENV["HOMEPATH"], ".ssh", "id_rsa"),
@@ -75,11 +75,11 @@ git:
   version:    #{run "git --version"}
 
 ruby:
-  bin:        #{File.join(Config[:railsinstaller_path], "Ruby1.9.2", "bin", "ruby.exe")}
+  bin:        #{File.join(Config[:easyruby_path], "Ruby1.9.2", "bin", "ruby.exe")}
   version:    #{run "ruby -v"}
 
 rails:
-  bin:        #{File.join(Config[:railsinstaller_path], "Ruby1.9.2", "bin", "rails.bat")}
+  bin:        #{File.join(Config[:easyruby_path], "Ruby1.9.2", "bin", "rails.bat")}
   version:    #{run "rails -v"}
 
 ssh:

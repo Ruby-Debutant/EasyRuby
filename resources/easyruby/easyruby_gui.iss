@@ -89,7 +89,7 @@ begin
   URLText.Top := TmpLabel.Top;
   URLText.Left := TmpLabel.Left + TmpLabel.Width + ScaleX(4);
   URLText.AutoSize := True;
-  URLText.Caption := 'http://railsinstaller.org/';
+  URLText.Caption := 'http://easyruby.org/';
   URLText.Cursor := crHand;
   URLText.Font.Color := clBlue;
   URLText.OnClick := @URLText_OnClick;
@@ -106,7 +106,7 @@ begin
   URLText.Top := TmpLabel.Top;
   URLText.Left := TmpLabel.Left + TmpLabel.Width + ScaleX(4);
   URLText.AutoSize := True;
-  URLText.Caption := 'http://groups.google.com/group/railsinstaller';
+  URLText.Caption := 'http://groups.google.com/group/easyruby';
   URLText.Cursor := crHand;
   URLText.Font.Color := clBlue;
   URLText.OnClick := @URLText_OnClick;
@@ -123,7 +123,7 @@ begin
   URLText.Top := TmpLabel.Top;
   URLText.Left := TmpLabel.Left + TmpLabel.Width + ScaleX(4);
   URLText.AutoSize := True;
-  URLText.Caption := 'http://wiki.github.com/wayneeseguin/railsinstaller';
+  URLText.Caption := 'http://wiki.github.com/wayneeseguin/easyruby';
   URLText.Cursor := crHand;
   URLText.Font.Color := clBlue;
   URLText.OnClick := @URLText_OnClick;
@@ -133,7 +133,7 @@ begin
   URLText.Top := TmpLabel.Top;
   URLText.Left := TmpLabel.Left + TmpLabel.Width + ScaleX(4);
   URLText.AutoSize := True;
-  URLText.Caption := 'http://webchat.freenode.net/?channels=railsinstaller';
+  URLText.Caption := 'http://webchat.freenode.net/?channels=easyruby';
   URLText.Cursor := crHand;
   URLText.Font.Color := clBlue;
   URLText.OnClick := @URLText_OnClick;

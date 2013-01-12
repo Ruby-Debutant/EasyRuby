@@ -1,4 +1,4 @@
-module RailsInstaller
+module EasyRuby
 
   require "net/http"
   require "tempfile"
@@ -8,7 +8,7 @@ module RailsInstaller
   def self.download(package, count = 3)
    filename = File.basename(package.url)
 
-   return if File.exists?(File.join(RailsInstaller::Archives, filename))
+   return if File.exists?(File.join(EasyRuby::Archives, filename))
 
    begin
 
@@ -22,7 +22,7 @@ module RailsInstaller
 
       uri = URI.parse(package.url)
 
-      print "Downloading from #{package.url} to #{RailsInstaller::Archives}\n" if $Flags[:verbose]
+      print "Downloading from #{package.url} to #{EasyRuby::Archives}\n" if $Flags[:verbose]
       http.get_response(uri) do |response|
 
         case response
@@ -49,15 +49,15 @@ module RailsInstaller
             total = response.header["Content-Length"].to_i
 
             # Ensure that the destination directory exists.
-            unless File.directory?(RailsInstaller::Archives)
-              FileUtils.mkdir_p(RailsInstaller::Archives)
+            unless File.directory?(EasyRuby::Archives)
+              FileUtils.mkdir_p(EasyRuby::Archives)
             end
 
-            if File.exist?(File.join(RailsInstaller::Archives, filename))
-              FileUtils.rm_f(File.join(RailsInstaller::Archives,filename))
+            if File.exist?(File.join(EasyRuby::Archives, filename))
+              FileUtils.rm_f(File.join(EasyRuby::Archives,filename))
             end
 
-            Dir.chdir(RailsInstaller::Archives) do
+            Dir.chdir(EasyRuby::Archives) do
               # See https://github.com/oneclick/rubyinstaller/blob/master/rake/contrib/uri_ext.rb#L234-276
               # for another alternative to this.
               response.read_body do |chunk|
@@ -69,7 +69,7 @@ module RailsInstaller
               temp_file.close
               FileUtils.mv(
                 temp_file.path,
-                File.join(RailsInstaller::Archives, filename),
+                File.join(EasyRuby::Archives, filename),
                 :force => true
               )
 
@@ -81,8 +81,8 @@ module RailsInstaller
       end
 
    rescue Exception => exception
-      if File.exists?(File.join(RailsInstaller::Archives, filename))
-        File.unlink(File.join(RailsInstaller::Archives,filename))
+      if File.exists?(File.join(EasyRuby::Archives, filename))
+        File.unlink(File.join(EasyRuby::Archives,filename))
       end
       printf "ERROR: #{exception.message}\n"
       return false
